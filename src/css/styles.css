@@ -28,7 +28,7 @@ body {
 
 img {
     width: 100%;
-    height: 100%;
+    height: 300px;
 }
 
 .info {
@@ -44,4 +44,27 @@ img {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+}
+.search-form {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    background-color: tomato;
+    height: 50px;
+}
+
+input, button {
+    border-radius: 10px;
+    height: 30px;
+    border: none;
+}
+
+input {
+    padding-left: 10px;
 }

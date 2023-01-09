@@ -69,8 +69,6 @@ function renderGallery (images) {
 }
 
 
-
-    
 gallery.on('show.simplelightbox', function () {
     gallery.options.captionsData = 'alt';
     gallery.options.captionDelay = 250;
