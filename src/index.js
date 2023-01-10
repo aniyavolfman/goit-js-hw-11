@@ -11,17 +11,31 @@ const URL_DEFAULT = 'https://pixabay.com/api/?key=32728160-634e7d154d1682a06810c
 const formEl = document.querySelector('#search-form');
 const inputEl = document.querySelector('input[name="searchQuery"]');
 const divGalleryEl = document.querySelector('.gallery');
+const buttonMoreEl = document.querySelector('.load-more');
 
 let page = 1;
+let keyValue = '';
 
 
 formEl.addEventListener('submit', onFormSubmit);
+buttonMoreEl.addEventListener('click', onButtonClick);
 
 function onFormSubmit(event) {
     event.preventDefault();
-    getImg(inputEl.value);
+
+    keyValue = inputEl.value;
+    resetPage();
+    divGalleryEl.innerHTML = '';
+
+    getImg(keyValue);
+
     event.currentTarget.reset();
 }
+
+function onButtonClick () {
+    getImg(keyValue);
+}
+
 
 async function getImg(keyWord) {
     try {
@@ -68,8 +82,8 @@ function renderGallery (images) {
         </div>
         `;
     }).join('');
-    divGalleryEl.innerHTML = markup;
-    
+    divGalleryEl.insertAdjacentHTML("beforeend",markup);
+
     gallery.refresh();
 
     const { height: cardHeight } = document
@@ -91,3 +105,6 @@ gallery.on('show.simplelightbox', function () {
 });
     
 
+function resetPage() {
+    page = 1;
+}
