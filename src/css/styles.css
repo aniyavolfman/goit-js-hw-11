@@ -10,6 +10,7 @@ body {
     background-color: #fafafa;
     color: #212121;
     line-height: 1.5;
+    text-align: center;
 }
 
 .gallery {
@@ -70,9 +71,11 @@ input {
 }
 
 .load-more {
-    position: fixed;
-    left: 50%;
-    bottom: 50px;
+    
     background-color: tomato;
     color: #fafafa;
+}
+
+.hidden {
+    display: none;
 }

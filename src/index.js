@@ -30,6 +30,7 @@ function onFormSubmit(event) {
     getImg(keyValue);
 
     event.currentTarget.reset();
+    buttonMoreEl.classList.remove('hidden');
 }
 
 function onButtonClick () {
