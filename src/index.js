@@ -1,4 +1,4 @@
-const axios = require('axios').default;
+import axios  from 'axios';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
@@ -58,8 +58,11 @@ async function getImg(keyWord) {
         alertEl.classList.add('hidden');
         return;
         }
+
+        if (page === 1) {
+            Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
+        }
         
-        Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
         buttonMoreEl.classList.remove('hidden');
         totalPages = Math.ceil(response.data.totalHits / 40);
 
@@ -106,15 +109,6 @@ function renderGallery (images) {
     divGalleryEl.insertAdjacentHTML("beforeend",markup);
 
     gallery.refresh();
-
-    const { height: cardHeight } = document
-    .querySelector(".gallery")
-    .firstElementChild.getBoundingClientRect();
-
-window.scrollBy({
-    top: cardHeight * 2,
-    behavior: "smooth",
-});
 }
 
 
