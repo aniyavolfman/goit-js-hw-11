@@ -12,24 +12,28 @@ const formEl = document.querySelector('#search-form');
 const inputEl = document.querySelector('input[name="searchQuery"]');
 const divGalleryEl = document.querySelector('.gallery');
 
+let page = 1;
+
 
 formEl.addEventListener('submit', onFormSubmit);
 
 function onFormSubmit(event) {
     event.preventDefault();
-    getUser(inputEl.value);
+    getImg(inputEl.value);
     event.currentTarget.reset();
 }
 
-async function getUser(keyWord) {
+async function getImg(keyWord) {
     try {
-    const response = await axios.get(`${URL_DEFAULT}&q=${keyWord}&image_type=photo&orientation=horizontal&safesearch=true`);
+    const response = await axios.get(`${URL_DEFAULT}&q=${keyWord}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${page}`);
 
     if (response.data.hits.length === 0) {
         Notify.failure("Sorry, there are no images matching your search query. Please try again.");
         }
-    console.log(response.data.hits)
+        console.log(response.data.totalHits)
+        Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
         renderGallery(response.data.hits);
+        page += 1;
 
     } catch (error) {
     console.error(error);
@@ -65,7 +69,17 @@ function renderGallery (images) {
         `;
     }).join('');
     divGalleryEl.innerHTML = markup;
+    
     gallery.refresh();
+
+    const { height: cardHeight } = document
+    .querySelector(".gallery")
+    .firstElementChild.getBoundingClientRect();
+
+window.scrollBy({
+    top: cardHeight * 2,
+    behavior: "smooth",
+});
 }
 
 

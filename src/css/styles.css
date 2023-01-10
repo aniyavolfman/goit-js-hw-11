@@ -68,3 +68,11 @@ input, button {
 input {
     padding-left: 10px;
 }
+
+.load-more {
+    position: fixed;
+    left: 50%;
+    bottom: 50px;
+    background-color: tomato;
+    color: #fafafa;
+}
