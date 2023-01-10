@@ -12,9 +12,11 @@ const formEl = document.querySelector('#search-form');
 const inputEl = document.querySelector('input[name="searchQuery"]');
 const divGalleryEl = document.querySelector('.gallery');
 const buttonMoreEl = document.querySelector('.load-more');
+const alertEl = document.querySelector('.text');
 
 let page = 1;
 let keyValue = '';
+let totalPages = 0;
 
 
 formEl.addEventListener('submit', onFormSubmit);
@@ -24,8 +26,16 @@ function onFormSubmit(event) {
     event.preventDefault();
 
     keyValue = inputEl.value;
+    
     resetPage();
     divGalleryEl.innerHTML = '';
+    alertEl.classList.add('hidden');
+
+    if (keyValue.trim() === '') {
+        Notify.info('Oops! Please, enter smth to search.');
+        buttonMoreEl.classList.add('hidden');
+        return;
+    }
 
     getImg(keyValue);
 
@@ -45,13 +55,20 @@ async function getImg(keyWord) {
     if (response.data.hits.length === 0) {
         Notify.failure("Sorry, there are no images matching your search query. Please try again.");
         buttonMoreEl.classList.add('hidden');
+        alertEl.classList.add('hidden');
         return;
         }
-        console.log(response.data.totalHits)
+        
         Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
         buttonMoreEl.classList.remove('hidden');
+        totalPages = Math.ceil(response.data.totalHits / 40);
+
         renderGallery(response.data.hits);
         page += 1;
+        
+        if (page > totalPages) {
+            return toogleAlertMarkup();
+        }
 
     } catch (error) {
     console.error(error);
@@ -111,4 +128,9 @@ gallery.on('show.simplelightbox', function () {
 
 function resetPage() {
     page = 1;
+}
+
+function toogleAlertMarkup() {
+    alertEl.classList.remove('hidden');
+    buttonMoreEl.classList.add('hidden');
 }
