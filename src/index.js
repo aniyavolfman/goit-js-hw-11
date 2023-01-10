@@ -30,7 +30,7 @@ function onFormSubmit(event) {
     getImg(keyValue);
 
     event.currentTarget.reset();
-    buttonMoreEl.classList.remove('hidden');
+    
 }
 
 function onButtonClick () {
@@ -44,9 +44,12 @@ async function getImg(keyWord) {
 
     if (response.data.hits.length === 0) {
         Notify.failure("Sorry, there are no images matching your search query. Please try again.");
+        buttonMoreEl.classList.add('hidden');
+        return;
         }
         console.log(response.data.totalHits)
         Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
+        buttonMoreEl.classList.remove('hidden');
         renderGallery(response.data.hits);
         page += 1;
 
