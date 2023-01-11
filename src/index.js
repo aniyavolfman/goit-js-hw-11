@@ -106,7 +106,19 @@ function renderGallery (images) {
         </div>
         `;
     }).join('');
-    divGalleryEl.insertAdjacentHTML("beforeend",markup);
+    divGalleryEl.insertAdjacentHTML("beforeend", markup);
+    
+    if (page > 1) {
+            const { height: cardHeight } = document
+            .querySelector(".gallery")
+            .firstElementChild.getBoundingClientRect();
+
+            window.scrollBy({
+            top: cardHeight * 2,
+            behavior: "smooth",
+            });
+        }
+    
 
     gallery.refresh();
 }
